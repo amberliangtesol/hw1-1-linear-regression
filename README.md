@@ -1,56 +1,44 @@
-# Linear Regression Implementation - Complete Package
+# Linear Regression Interactive Visualizer
 
-This project provides a comprehensive implementation of Linear Regression, including both a from-scratch implementation and an interactive visualization tool.
+This project provides an interactive Linear Regression visualization tool using Streamlit.
 
 ## 📁 Project Structure
 
 ```
 hw1-1-linear-regression/
 │
-├── app.py                          # Interactive visualization app (original requirement)
-├── app_advanced.py                 # Advanced app with all features
-├── linear_regression_from_scratch.py  # Complete from-scratch implementation
-├── requirements.txt                # Project dependencies
-└── README.md                       # This file
+├── app.py              # Interactive visualization app
+├── requirements.txt    # Project dependencies
+├── TODO.md            # Project task tracking
+└── README.md          # This file
 ```
 
-## ✅ Completed To-Do Items
+## ✨ Features
 
-### 1. Data Preparation ✅
-- **Load dataset**: Support for CSV, NumPy arrays, and Pandas DataFrames
-- **Handle missing values**: Strategies include mean, median, or drop
-- **Split data**: Train/test splitting with configurable ratio
-- **Feature scaling**: StandardScaler implementation
+### Interactive Visualization
+- **Data Generation**: Generate n data points (100-1000) with linear relationship y = ax + b + noise
+- **Adjustable Parameters**:
+  - Number of data points (n)
+  - Coefficient (a): -10 to 10
+  - Intercept (b): -50 to 50  
+  - Noise variance: 0 to 1000
+- **Real-time Updates**: Instant visualization when parameters change
+- **Generate New Data**: Button to create new random datasets
 
-### 2. Model Implementation ✅
-- **From-scratch implementation**: Complete LinearRegressionScratch class
-- **Initialize weights and bias**: Automatic initialization
-- **Hypothesis function**: h(x) = wx + b implementation
-- **Cost function**: Mean Squared Error (MSE) implementation
-- **Gradient Descent**: Full implementation with:
-  - Gradient calculation
-  - Parameter updates
-  - Learning rate control
+### Linear Regression
+- **Automatic Calculation**: Uses scikit-learn for robust regression
+- **Visual Representation**: Red regression line on scatter plot
+- **Statistics Display**: 
+  - R² score
+  - Mean Squared Error (MSE)
+  - Regression equation
+  - True equation comparison
 
-### 3. Training ✅
-- **Model training**: Fit method with gradient descent
-- **Convergence monitoring**: Cost history tracking and visualization
-
-### 4. Evaluation ✅
-- **Predictions**: Support for test set predictions
-- **Evaluation metrics**:
-  - Mean Squared Error (MSE) ✅
-  - R-squared (R²) Score ✅
-- **Visualizations**: Predictions vs actual values plots
-
-### 5. Prediction ✅
-- **New data predictions**: `predict_new()` function for unseen data
-- **Scaling support**: Automatic scaling if training data was scaled
-
-### 6. Documentation ✅
-- **Code documentation**: Comprehensive docstrings for all classes and methods
-- **Usage examples**: Included in the code
-- **This README**: Complete project documentation
+### Outlier Detection
+- **Top 5 Outliers**: Automatically identifies points furthest from regression line
+- **Visual Highlighting**: Orange markers with red borders
+- **Labeled Points**: Each outlier labeled (O1-O5)
+- **Distance Metrics**: Table showing outlier distances from regression line
 
 ## 🚀 Quick Start
 
@@ -61,141 +49,40 @@ hw1-1-linear-regression/
 pip install -r requirements.txt
 ```
 
-### Running the Applications
+### Running the Application
 
-#### 1. Original Interactive Visualizer
 ```bash
 streamlit run app.py
 ```
-Features:
-- Interactive parameter adjustment (n, a, variance)
-- Real-time visualization
-- Outlier detection (top 5)
-- Statistics display
 
-#### 2. Advanced Application
-```bash
-streamlit run app_advanced.py
-```
-Features:
-- Three modes: Interactive, From Scratch, Upload Dataset
-- Complete from-scratch implementation
-- Convergence monitoring
-- Feature importance analysis
-- Support for custom datasets
+The application will open in your browser at `http://localhost:8501`
 
-#### 3. Run From-Scratch Implementation Directly
-```python
-python linear_regression_from_scratch.py
-```
+## 💡 How to Use
 
-## 📊 Usage Examples
+1. **Adjust Parameters**: Use the sliders in the sidebar to set:
+   - Number of data points (n): 100-1000
+   - Coefficient (a): -10 to 10 for the linear relationship
+   - Intercept (b): -50 to 50
+   - Noise variance: 0-1000 to add randomness
 
-### Using the Pipeline
+2. **Generate Data**: Click the '🔄 Generate New Data' button to create a new dataset
 
-```python
-from linear_regression_from_scratch import LinearRegressionPipeline
-import numpy as np
+3. **Analyze Results**: 
+   - The red line shows the calculated linear regression
+   - Orange points with red borders are the top 5 outliers
+   - Check the statistics panel for R² score and MSE
+   - Compare fitted equation with true equation
 
-# Generate data
-X = np.random.randn(1000, 3)
-y = 2*X[:, 0] - 1.5*X[:, 1] + 0.5*X[:, 2] + 3 + np.random.randn(1000)*0.5
-data = np.column_stack([X, y])
+## 🌐 Deployment
 
-# Create and run pipeline
-pipeline = LinearRegressionPipeline(learning_rate=0.01, n_iterations=1000)
-results = pipeline.run_pipeline(data, scale=True, test_size=0.2)
+The application is deployed on Streamlit Cloud. You can access it at:
+- GitHub Repository: https://github.com/amberliangtesol/hw1-1-linear-regression
 
-# Make predictions on new data
-X_new = np.random.randn(10, 3)
-predictions = pipeline.predict_new(X_new)
-```
-
-### Using Individual Components
-
-```python
-from linear_regression_from_scratch import DataPreparation, LinearRegressionScratch, ModelEvaluation
-
-# Data preparation
-data_prep = DataPreparation()
-X, y = data_prep.load_data('your_data.csv')
-X, y = data_prep.handle_missing_values(X, y, strategy='mean')
-X_train, X_test, y_train, y_test = data_prep.split_data(X, y)
-X_train, X_test = data_prep.scale_features(X_train, X_test)
-
-# Model training
-model = LinearRegressionScratch(learning_rate=0.01, n_iterations=1000)
-model.fit(X_train, y_train, verbose=True)
-
-# Evaluation
-evaluator = ModelEvaluation()
-y_pred = model.predict(X_test)
-mse = evaluator.mean_squared_error(y_test, y_pred)
-r2 = evaluator.r2_score(y_test, y_pred)
-```
-
-## 📈 Features
-
-### DataPreparation Class
-- Load data from multiple sources
-- Handle missing values (mean/median/drop)
-- Train/test splitting
-- Feature scaling with StandardScaler
-
-### LinearRegressionScratch Class
-- Initialize parameters (weights and bias)
-- Hypothesis function implementation
-- MSE cost function
-- Gradient descent optimization
-- Convergence tracking
-
-### ModelEvaluation Class
-- Mean Squared Error (MSE)
-- R-squared score
-- Visualization tools
-
-### LinearRegressionPipeline Class
-- Complete end-to-end pipeline
-- Automatic preprocessing
-- Model training and evaluation
-- Support for new predictions
-
-## 📊 Visualizations
-
-The implementation provides several visualization options:
-
-1. **Convergence Plot**: Shows cost reduction over iterations
-2. **Predictions vs Actual**: Scatter plot comparing predictions to true values
-3. **Residual Plot**: Shows prediction errors
-4. **Feature Importance**: Bar chart of feature weights
-
-## 🎯 Key Algorithms
-
-### Gradient Descent
-```
-for iteration in range(n_iterations):
-    1. Calculate predictions: ŷ = Xw + b
-    2. Calculate error: e = ŷ - y
-    3. Calculate gradients:
-       - dw = (1/m) * X^T * e
-       - db = (1/m) * sum(e)
-    4. Update parameters:
-       - w = w - α * dw
-       - b = b - α * db
-```
-
-### Cost Function (MSE)
-```
-J(w, b) = (1/2m) * Σ(ŷᵢ - yᵢ)²
-```
-
-### R² Score
-```
-R² = 1 - (SS_res / SS_tot)
-where:
-- SS_res = Σ(yᵢ - ŷᵢ)²
-- SS_tot = Σ(yᵢ - ȳ)²
-```
+To deploy your own version:
+1. Fork the repository
+2. Go to https://share.streamlit.io/
+3. Connect your GitHub account
+4. Deploy with repository path and `app.py` as main file
 
 ## 🔧 Requirements
 
@@ -206,21 +93,15 @@ where:
 - Scikit-learn
 - Streamlit
 
-## 📝 Notes
+## 📝 Project Description
 
-- The from-scratch implementation uses pure NumPy for all computations
-- The pipeline supports both scaled and unscaled features
-- Convergence monitoring helps identify optimal iteration counts
-- The implementation includes proper train/test splitting to evaluate generalization
+This interactive Linear Regression visualizer demonstrates:
+- Real-time parameter adjustment and visualization
+- Outlier detection algorithms
+- Statistical metrics calculation
+- The relationship between true and fitted models
 
-## 🎓 Educational Value
-
-This implementation is ideal for:
-- Understanding linear regression fundamentals
-- Learning gradient descent optimization
-- Practicing data preprocessing techniques
-- Comparing custom implementations with sklearn
-- Visualizing machine learning concepts
+Perfect for understanding how linear regression works with varying levels of noise and different parameter settings.
 
 ## 📜 License
 
@@ -228,4 +109,4 @@ This project is for educational purposes.
 
 ## 🙏 Acknowledgments
 
-Created as part of HW1-1 assignment for understanding Linear Regression implementation from scratch.
+Created as part of HW1-1 assignment for Linear Regression visualization with Streamlit.
