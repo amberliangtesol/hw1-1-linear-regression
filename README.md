@@ -75,8 +75,9 @@ The application will open in your browser at `http://localhost:8501`
 
 ## 🌐 Deployment
 
-The application is deployed on Streamlit Cloud. You can access it at:
-- GitHub Repository: https://github.com/amberliangtesol/hw1-1-linear-regression
+The application is deployed on Streamlit Cloud and available at:
+- **Live App**: https://2025hw1.streamlit.app/
+- **GitHub Repository**: https://github.com/amberliangtesol/hw1-1-linear-regression
 
 To deploy your own version:
 1. Fork the repository
